@@ -6,13 +6,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- External CSS -->
 <link rel="stylesheet" href="style.css">
 
 <style>
 
 body{
-font-family:Arial;
+font-family: Arial;
 text-align:center;
 padding:40px;
 }
@@ -30,6 +29,7 @@ width:100%;
 font-size:16px;
 color:white;
 border-radius:6px;
+cursor:pointer;
 }
 
 </style>
@@ -42,13 +42,16 @@ border-radius:6px;
 
 <h2>Create AR Gift</h2>
 
-<form id="uploadForm">
+<form
+action="https://script.google.com/macros/s/AKfycbzMRQIOX9qKilEEoh7EiDGejpk0cZ7elhy92fQqQxIoMyyBQdyjczhAucttK_u2A_YC/exec"
+method="POST"
+enctype="multipart/form-data">
 
 <p>Upload Image (AR Marker)</p>
-<input type="file" id="image" accept="image/*" required>
+<input type="file" name="image" accept="image/*" required>
 
 <p>Upload Video</p>
-<input type="file" id="video" accept="video/*" required>
+<input type="file" name="video" accept="video/*" required>
 
 <br><br>
 
@@ -56,49 +59,7 @@ border-radius:6px;
 
 </form>
 
-<br>
-
-<div id="result"></div>
-
 </div>
-
-<script>
-
-document.getElementById("uploadForm").addEventListener("submit", async function(e){
-
-e.preventDefault()
-
-let image = document.getElementById("image").files[0]
-let video = document.getElementById("video").files[0]
-
-let formData = new FormData()
-
-formData.append("image",image)
-formData.append("video",video)
-
-let response = await fetch("PASTE_GOOGLE_SCRIPT_URL_HERE",{
-method:"POST",
-body:formData
-})
-
-let data = await response.json()
-
-document.getElementById("result").innerHTML=
-
-`
-<p>AR Link</p>
-<a href="${data.link}" target="_blank">${data.link}</a>
-
-<p>QR Code</p>
-<img src="${data.qr}">
-`
-
-})
-
-</script>
-
-<!-- External JavaScript -->
-<script src="script.js"></script>
 
 </body>
 </html>
