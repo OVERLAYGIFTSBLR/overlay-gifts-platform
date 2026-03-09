@@ -1,0 +1,41 @@
+<html>
+
+<head>
+
+<script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js"></script>
+
+</head>
+
+<body>
+
+<a-scene mindar-image="imageTargetSrc: TARGET.mind"
+
+color-space="sRGB"
+renderer="colorManagement:true">
+
+<a-assets>
+
+<video id="vid" src="VIDEO_LINK" autoplay loop></video>
+
+</a-assets>
+
+<a-camera position="0 0 0"></a-camera>
+
+<a-entity mindar-image-target="targetIndex:0">
+
+<a-video src="#vid"
+width="1"
+height="0.56"
+position="0 0 0">
+
+</a-video>
+
+</a-entity>
+
+</a-scene>
+
+</body>
+
+</html>
