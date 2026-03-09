@@ -1,45 +1,71 @@
-const form = document.getElementById("uploadForm");
-
-form.addEventListener("submit", async function(e){
-
-e.preventDefault();
-
-let image = document.getElementById("image").files[0];
-let video = document.getElementById("video").files[0];
-
-if(!image || !video){
-alert("Please upload both image and video");
-return;
+body{
+font-family: Arial, Helvetica, sans-serif;
+background:#f4f4f4;
+margin:0;
+padding:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-let formData = new FormData();
-
-formData.append("image", image);
-formData.append("video", video);
-
-document.getElementById("result").innerHTML = "Uploading... please wait";
-
-try{
-
-let response = await fetch("PASTE_GOOGLE_SCRIPT_URL_HERE",{
-method:"POST",
-body:formData
-});
-
-let data = await response.json();
-
-document.getElementById("result").innerHTML = `
-<p><strong>Your AR Link</strong></p>
-<a href="${data.link}" target="_blank">${data.link}</a>
-
-<p><strong>Scan QR Code</strong></p>
-<img src="${data.qr}">
-`;
-
-}catch(error){
-
-document.getElementById("result").innerHTML = "Error generating AR gift.";
-
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+max-width:420px;
+width:90%;
+text-align:center;
 }
 
-});
+h2{
+margin-bottom:20px;
+color:#333;
+}
+
+p{
+font-size:14px;
+color:#555;
+margin:10px 0;
+}
+
+input[type="file"]{
+width:100%;
+padding:8px;
+margin-top:5px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+background:#c89b3c;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#a67f2f;
+}
+
+#result{
+margin-top:20px;
+}
+
+#result a{
+color:#007bff;
+text-decoration:none;
+font-weight:bold;
+}
+
+#result img{
+margin-top:10px;
+width:180px;
+}
