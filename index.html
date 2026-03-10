@@ -1,76 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-
-<title>Create AR Gift</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-
-body{
-font-family: Arial;
-text-align:center;
-padding:40px;
-}
-
-.container{
-max-width:420px;
-margin:auto;
-}
-
-button{
-background:#c89b3c;
-border:none;
-padding:12px;
-width:100%;
-font-size:16px;
-color:white;
-border-radius:6px;
-cursor:pointer;
-}
-
-button:hover{
-background:#a67f2f;
-}
-
-</style>
-
-</head>
-
 <body>
 
-<div class="container">
+<h2>Upload Marker Image</h2>
 
-<h2>Create AR Gift</h2>
-<form
-action="https://script.google.com/macros/s/AKfycbzMRQIOX9qKilEEoh7EiDGejpk0cZ7elhy92fQqQxIoMyyBQdyjczhAucttK_u2A_YC/exec"
-method="POST"
-enctype="multipart/form-data"
-target="_blank"
->
+<input type="file" id="image">
 
-<p>Upload Image (AR Marker)</p>
-<input type="file" name="image" accept="image/*" required>
+<button onclick="upload()">Upload</button>
 
-<p>Upload Video</p>
-<input type="file" name="video" accept="video/*" required>
+<script>
 
-<br><br>
+async function upload(){
 
-<button type="submit">Generate AR Gift</button>
+const file = document.getElementById("image").files[0];
 
-</form>
+const reader = new FileReader();
 
-<br>
+reader.onload = async function(){
 
-<div id="result"></div>
+const base64 = reader.result.split(",")[1];
 
-</div>
+const formData = new FormData();
+formData.append("image", base64);
 
-<script src="script.js"></script>
+const res = await fetch("https://script.google.com/macros/s/AKfycbzMRQIOX9qKilEEoh7EiDGejpk0cZ7elhy92fQqQxIoMyyBQdyjczhAucttK_u2A_YC/exec", {
+method:"POST",
+body:formData
+});
+
+const data = await res.json();
+
+console.log(data);
+
+alert("Image saved in Drive!");
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+</script>
 
 </body>
 </html>
